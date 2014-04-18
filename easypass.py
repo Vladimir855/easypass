@@ -1,14 +1,17 @@
 from Tkinter import *
 
 debugMode = False
+sourceFileName = ""
+randomSiteUrl = "http://www.random.org/integers/?num=30&min=1&max=6&col=5&base=10&format=plain&rnd=new"
 diceWords = ['ERROR','ERROR','ERROR','ERROR','ERROR','ERROR']
 diceWordsCount = len( diceWords )
+diceWordsResult = ""
 wordListLang = "en"
 
 mainWindow = Tk()
 mainWindow.title("Diceware lookup")
 mainWindow.minsize(200,200)
-mainWindow.geometry("400x370-260+35")
+mainWindow.geometry("400x410-260+35")
 # geometry: x-size 'x' y-size '+-' x-position '+-' y-position
 
 # START: def matchup
@@ -16,11 +19,14 @@ mainWindow.geometry("400x370-260+35")
 def matchup(argFileName):
 
     global debugMode
+    global sourceFileName
     global diceWords
     global diceWordsCount
+    global diceWordsResult
 
+    sourceFileName = argFileName
     wordList = open('wordlist.txt', 'r')
-    sourceFile = open(argFileName+".txt", 'r+')
+    sourceFile = open(sourceFileName+".txt", 'r+')
 
     fileValues = sourceFile.readlines()
     if debugMode:
@@ -66,9 +72,7 @@ def matchup(argFileName):
 
     sourceFile.close()
     wordList.close()
-
-    diceWordsResult = ""
-
+    
     for n3 in range( diceWordsCount ):
         diceWordsResult = diceWordsResult + str( diceWords[n3] )
         if n3 != diceWordsCount - 1:
@@ -78,10 +82,7 @@ def matchup(argFileName):
         print( str( diceWords ) )
     print( diceWordsResult )
 
-    resultFile = open( argFileName + "_result.txt", 'w')
-    resultFile.write( diceWordsResult )
-    resultFile.close()
-
+    resultValue.set( "" )
     resultValue.set( diceWordsResult )
 
 # END: def matchup
@@ -93,14 +94,22 @@ def callbackLangSelected():
     global wordListLang
     wordListLang = langSelectorValue.get()
 
-def callbackCloseButtonClicked():
-    mainWindow.destroy()
-
 def callbackOkButtonClicked():
     if debugMode:
         print("OK button clicked")
         print("\n")
     matchup( fileNameEntryValue.get() )
+
+def callbackSaveToFileButtonClicked():
+    global sourceFileName
+    global diceWordsResult
+    resultFile = open( sourceFileName + "_result.txt", 'w')
+    resultFile.write( diceWordsResult )
+    resultFile.close()
+
+def callbackCloseButtonClicked():
+    mainWindow.destroy()
+
 
 # Set up the GUI
 
@@ -140,6 +149,12 @@ resultField.pack()
 
 labeledGroupActions = LabelFrame(master=mainWindow, text="Actions", padx=5, pady=5)
 labeledGroupActions.pack(padx=10, pady=10)
+
+saveToFileButton = Button(master=labeledGroupActions, width=70, text="Save to file", command=callbackSaveToFileButtonClicked)
+saveToFileButton.pack()
+
+separator2 = Frame(master=labeledGroupActions, height=2, bd=1, relief=SUNKEN)
+separator2.pack(fill=X, padx=5, pady=5)
 
 closeButton = Button(master=labeledGroupActions, width=70, text="Close", command=callbackCloseButtonClicked)
 closeButton.pack()
