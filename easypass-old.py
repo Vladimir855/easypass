@@ -4,7 +4,7 @@ debugMode = False
 sourceFileName = ""
 randomSiteUrl = "http://www.random.org/integers/?num=30&min=1&max=6&col=5&base=10&format=plain&rnd=new"
 diceWords = ['ERROR','ERROR','ERROR','ERROR','ERROR','ERROR']
-diceWordsCount = len( diceWords )
+diceWordsCount = len(diceWords)
 diceWordsResult = ""
 wordListLang = "en"
 
@@ -33,7 +33,7 @@ def matchup(argFileName):
         print("fileValues as the result of file.readlines() :")
         print( str(fileValues) )
         print("\n")
-    
+
     for n1 in range(len(fileValues)):
         if debugMode:
             print("fileValues[" + str(n1) + "] with value '" + str( fileValues[n1] ) + "'" )
@@ -41,18 +41,18 @@ def matchup(argFileName):
         if debugMode:
             print( "set to value '" + str( fileValues[n1] ) + "'" )
             print("\n")
-    
+
     if debugMode:
         print("START: matching wordListValues to fileValues and setting diceWords")
         print("\n")
-    
+
     wordListValues = wordList.readlines()
-    
+
     if debugMode:
         print("wordListValues as the result of wordList.readlines() :")
         print( str( fileValues[0:10] ) )
         print("\n\n")
-    
+
     for n2 in range( len( wordListValues ) ):
         if debugMode:
             print("wordListValues[" + str(n2) + "] with value '" + str( wordListValues[n1] ) + "'")
@@ -72,7 +72,7 @@ def matchup(argFileName):
 
     sourceFile.close()
     wordList.close()
-    
+
     for n3 in range( diceWordsCount ):
         diceWordsResult = diceWordsResult + str( diceWords[n3] )
         if n3 != diceWordsCount - 1:
@@ -86,7 +86,7 @@ def matchup(argFileName):
     resultValue.set( diceWordsResult )
 
 # END: def matchup
-       
+
 
 # Define callback functions for specific events
 
