@@ -12,15 +12,49 @@ IS_DEBUG_MODE = True
 # -------------------------------------------------------------------- #
 # variables #
 
+dice_words = ["ERROR"]
+dice_words_count = len(dice_words)
+dice_words_result = "ERROR"
+
+# wordListLang = "en"
+# randomSiteUrl = "http://www.random.org/integers/?num=30&min=1&max=6&col=5&base=10&format=plain&rnd=new"
+
+# -------------------------------------------------------------------- #
+# wordlist #
+
+wordlist_file_name = "wordlist"
+wordlist_dict = {}
+wordlist_dict_keys = wordlist_dict.keys()
+
+def get_wordlist_file_path():
+    global wordlist_file_name
+    return "data/{0}.txt".format(wordlist_file_name)
+#-#
+
+# -------------------------------------------------------------------- #
+# source file #
+
 source_file_name = ""
 source_dice_ids = []
 
-dice_words = ["ERROR"]
-dice_words_count = len(dice_words)
-dice_words_result = ""
+def set_source_file_name(arg_source_file_name):
+    global source_file_name
+    source_file_name = arg_source_file_name
+    debug("source_file_name = {0}".format(source_file_name))
+#-#
 
-# wordListLang = "en"
-#randomSiteUrl = "http://www.random.org/integers/?num=30&min=1&max=6&col=5&base=10&format=plain&rnd=new"
+def get_source_file_path():
+    global source_file_name
+    return "data/{0}.txt".format(source_file_name)
+#-#
+
+# -------------------------------------------------------------------- #
+# result file #
+
+def get_result_file_path():
+    global source_file_name
+    return "output/{0}-result.txt".format(source_file_name)
+#-#
 
 # -------------------------------------------------------------------- #
 # functions #
@@ -30,102 +64,78 @@ def debug(message):
 
     if IS_DEBUG_MODE:
         print(message)
+#-#
 
-# START: def lookup
+# START: def load_wordlist #
+
+def load_wordlist():
+
+    global wordlist_dict
+
+    try:
+        wordlist_file = open(get_wordlist_file_path(), 'r')
+    except IOError:
+        print('error, file not found')
+    else:
+        with wordlist_file:
+
+            for line in wordlist_file:
+                key, value = line.rstrip().split("\t", -1)
+                wordlist_dict[key] = value
+
+            wordlist_dict_keys = wordlist_dict.keys()
+
+# END: def load_wordlist #
+
+# START: def lookup #
 
 def lookup():
 
+    global wordlist_dict
+    global wordlist_dict_keys
     global source_dice_ids
     global dice_words
     global dice_words_count
     global dice_words_result
 
-    sourceFileName = argFileName
-    wordList = open('wordlist.txt', 'r')
-    sourceFile = open(sourceFileName+".txt", 'r+')
+    debug("START: matching wordListValues to fileValues and setting diceWords")
 
-    fileValues = sourceFile.readlines()
-    if debugMode:
-        print("fileValues as the result of file.readlines() :")
-        print( str(fileValues) )
-        print("\n")
+    if len(source_dice_ids) > 0:
+        dice_words = list()
+        dice_words_count = len(dice_words)
+        dice_words_result = str()
 
-    for n1 in range(len(fileValues)):
-        if debugMode:
-            print("fileValues[" + str(n1) + "] with value '" + str( fileValues[n1] ) + "'" )
-        fileValues[n1] = fileValues[n1].rstrip("\n")
-        if debugMode:
-            print( "set to value '" + str( fileValues[n1] ) + "'" )
-            print("\n")
+    for dice_id in source_dice_ids:
+        #debug("dice_id '{0}'".format(dice_id))
+        if dice_id in wordlist_dict_keys:
+            debug("wordlist_dict['{0}'] : '{1}'".format(dice_id, wordlist_dict[dice_id]))
+            dice_words.append(wordlist_dict[dice_id])
 
-    if debugMode:
-        print("START: matching wordListValues to fileValues and setting diceWords")
-        print("\n")
+    debug("dice_words = {0}".format(dice_words))
 
-    wordListValues = wordList.readlines()
+    dice_words_count = len(dice_words)
 
-    if debugMode:
-        print("wordListValues as the result of wordList.readlines() :")
-        print( str( fileValues[0:10] ) )
-        print("\n\n")
+    result_word_separator = " "
 
-    for n2 in range( len( wordListValues ) ):
-        if debugMode:
-            print("wordListValues[" + str(n2) + "] with value '" + str( wordListValues[n1] ) + "'")
-        wordListValues[n2] = wordListValues[n2].rstrip("\n")
-        if debugMode:
-            print( "set to value '" + str( wordListValues[n2] ) + "'" )
-            print("\n")
-        currentIndex = wordListValues[n2].split("\t", -1)[0]
-        currentValue = wordListValues[n2].split("\t", -1)[1]
-        if debugMode:
-            print( "currentIndex = " + str( currentIndex ) )
-            print( "currentValue = " + str( currentValue ) )
-            print("\n")
-        if fileValues.count( currentIndex ) != 0 :
-            dwIndex = fileValues.index( currentIndex )
-            diceWords[dwIndex] = currentValue
+    dice_words_result = result_word_separator.join(dice_words)
 
-    sourceFile.close()
-    wordList.close()
+    debug("dice_words_result = {0}".format(dice_words_result))
 
-    for n3 in range( diceWordsCount ):
-        dice_words_result = dice_words_result + str( diceWords[n3] )
-        if n3 != diceWordsCount - 1:
-            dice_words_result = dice_words_result + " "
+    #for n3 in range( diceWordsCount ):
+    #    dice_words_result = dice_words_result + str( diceWords[n3] )
+    #    if n3 != diceWordsCount - 1:
+    #        dice_words_result = dice_words_result + " "
+#-#
 
-    if debugMode:
-        print( str( diceWords ) )
-    print( dice_words_result )
+# END: def lookup #
 
-    resultValue.set( "" )
-    resultValue.set( dice_words_result )
-
-# END: def lookup
-
-# START: def display_result
+# START: def display_result #
 
 def display_result():
     var_result.set(dice_words_result)
+#-#
 
-# END: def display_result
-
-# START: getters and setters
-
-def get_source_file_path():
-    global source_file_name
-    return "data/{0}.txt".format(source_file_name)
-
-def set_source_file_name(arg_source_file_name):
-    global source_file_name
-    source_file_name = arg_source_file_name
-    debug("source_file_name = {0}".format(source_file_name))
-
-def get_result_file_path():
-    global source_file_name
-    return "output/{0}-result.txt".format(source_file_name)
-
-# END: getters and setters
+# END: def display_result #
 
 # -------------------------------------------------------------------- #
 # callbacks #
@@ -140,6 +150,7 @@ def action_load_file():
         source_file = open(get_source_file_path(), 'r+')
     except IOError:
         print('error, file not found')
+        return
     else:
         with source_file:
             for line in source_file:
@@ -149,11 +160,12 @@ def action_load_file():
 
     debug(source_dice_ids)
 
-    #lookup()
+    lookup()
 
     display_result()
 
     button_save_to_file.state(["!disabled"])
+#-#
 
 def action_save_to_file():
     global dice_words_result
@@ -165,6 +177,7 @@ def action_save_to_file():
     else:
         with resultFile:
             resultFile.write(dice_words_result)
+#-#
 
 # -------------------------------------------------------------------- #
 # set up the GUI #
@@ -204,6 +217,7 @@ button_save_to_file.grid(column=4, row=2, padx=5, pady=5)
 button_save_to_file.state(["disabled"])
 
 # main program loop #
+load_wordlist()
 entry_filename.focus()
 debug("Debug mode is on")
 root.mainloop()
