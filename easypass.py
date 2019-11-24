@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 
-# imports #
+# imports ######################################################################
+
 import tkinter as Tk
 from tkinter import ttk
 
-# -------------------------------------------------------------------- #
-# constants #
+# constants ####################################################################
 
 IS_DEBUG_MODE = True
 
-# -------------------------------------------------------------------- #
-# variables #
+# variables ####################################################################
 
 dice_words = ["ERROR"]
 dice_words_count = len(dice_words)
@@ -19,8 +18,7 @@ dice_words_result = "ERROR"
 # wordListLang = "en"
 # randomSiteUrl = "http://www.random.org/integers/?num=30&min=1&max=6&col=5&base=10&format=plain&rnd=new"
 
-# -------------------------------------------------------------------- #
-# wordlist #
+# wordlist #####################################################################
 
 wordlist_file_name = "wordlist"
 wordlist_dict = {}
@@ -31,8 +29,7 @@ def get_wordlist_file_path():
     return "data/{0}.txt".format(wordlist_file_name)
 #-#
 
-# -------------------------------------------------------------------- #
-# source file #
+# source file ##################################################################
 
 source_file_name = ""
 source_dice_ids = []
@@ -48,16 +45,14 @@ def get_source_file_path():
     return "data/{0}.txt".format(source_file_name)
 #-#
 
-# -------------------------------------------------------------------- #
-# result file #
+# result file ##################################################################
 
 def get_result_file_path():
     global source_file_name
     return "output/{0}-result.txt".format(source_file_name)
 #-#
 
-# -------------------------------------------------------------------- #
-# functions #
+# functions ####################################################################
 
 def debug(message):
     global IS_DEBUG_MODE
@@ -66,7 +61,7 @@ def debug(message):
         print(message)
 #-#
 
-# START: def load_wordlist #
+# def load_wordlist ############################################################
 
 def load_wordlist():
 
@@ -85,9 +80,7 @@ def load_wordlist():
 
             wordlist_dict_keys = wordlist_dict.keys()
 
-# END: def load_wordlist #
-
-# START: def lookup #
+# def lookup ###################################################################
 
 def lookup():
 
@@ -127,18 +120,13 @@ def lookup():
     #        dice_words_result = dice_words_result + " "
 #-#
 
-# END: def lookup #
-
-# START: def display_result #
+# def display_result ###########################################################
 
 def display_result():
     var_result.set(dice_words_result)
 #-#
 
-# END: def display_result #
-
-# -------------------------------------------------------------------- #
-# callbacks #
+# bound action function ########################################################
 
 def action_load_file():
     global source_dice_ids
@@ -179,8 +167,7 @@ def action_save_to_file():
             resultFile.write(dice_words_result)
 #-#
 
-# -------------------------------------------------------------------- #
-# set up the GUI #
+# set up the GUI ###############################################################
 
 # root #
 root = Tk.Tk()
@@ -222,4 +209,4 @@ entry_filename.focus()
 debug("Debug mode is on")
 root.mainloop()
 
-# -------------------------------------------------------------------- #
+# END ##########################################################################
