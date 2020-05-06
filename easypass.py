@@ -2,6 +2,8 @@
 
 # imports ######################################################################
 
+import os
+
 import tkinter as Tk
 from tkinter import ttk
 
@@ -26,7 +28,7 @@ wordlist_dict_keys = wordlist_dict.keys()
 
 def get_wordlist_file_path():
     global wordlist_file_name
-    return "data/{0}.txt".format(wordlist_file_name)
+    return os.path.join("data", "{0}.txt".format(wordlist_file_name))
 #-#
 
 # source file ##################################################################
@@ -42,14 +44,14 @@ def set_source_file_name(arg_source_file_name):
 
 def get_source_file_path():
     global source_file_name
-    return "data/{0}.txt".format(source_file_name)
+    return os.path.join("data", "{0}.txt".format(source_file_name))
 #-#
 
 # result file ##################################################################
 
 def get_result_file_path():
     global source_file_name
-    return "output/{0}-result.txt".format(source_file_name)
+    return os.path.join("output", "{0}-result.txt".format(source_file_name))
 #-#
 
 # functions ####################################################################
