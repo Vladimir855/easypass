@@ -2,7 +2,6 @@
 layout: "default"
 #title: "easypass"
 #description: "easypass"
-permalink: "/easypass"
 ---
 
 [< sunarch](/)

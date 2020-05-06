@@ -2,10 +2,10 @@
 layout: "default"
 #title: "easypass"
 #description: "easypass"
-permalink: "/easypass/generator"
+permalink: "/generator"
 ---
 
-[< home](/easypass)
+[< home](index.md)
 
 Online version in development.
 

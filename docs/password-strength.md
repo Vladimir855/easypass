@@ -2,9 +2,9 @@
 layout: "default"
 #title: "easypass"
 #description: "easypass"
-permalink: "/easypass/password-strength"
+permalink: "/password-strength"
 ---
 
-[< home](/easypass)
+[< home](index.md)
 
 <a href="https://en.wikipedia.org/wiki/Password_strength" target="_blank">WikiPedia</a>
