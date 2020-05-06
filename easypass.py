@@ -7,6 +7,12 @@ import os
 import tkinter as Tk
 from tkinter import ttk
 
+
+# set working directory to script location ####################################################################
+
+if __file__:
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
 # constants ####################################################################
 
 IS_DEBUG_MODE = True
