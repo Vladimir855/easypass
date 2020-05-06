@@ -1,0 +1,27 @@
+plugins:
+  - jekyll-relative-links
+  - jekyll-redirect-from
+
+whitelist:
+  - jekyll-redirect-from
+
+relative_links:
+  enabled: true
+  collections: true
+
+theme: jekyll-theme-cayman
+
+include:
+  - index.md
+
+title: easypass
+description: diceword generator
+show_downloads: false
+#google_analytics: [Your Google Analytics tracking ID]
+
+#collections:
+
+#  c_name:
+#    output: true
+#    sort_by: title
+
