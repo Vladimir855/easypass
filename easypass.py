@@ -9,7 +9,7 @@
 
 import os
 
-import tkinter as Tk
+import tkinter
 from tkinter import ttk
 
 
@@ -37,33 +37,35 @@ wordlist_file_name = "agr-wordlist-en-original"
 wordlist_dict = {}
 wordlist_dict_keys = wordlist_dict.keys()
 
+
 def get_wordlist_file_path():
     global wordlist_file_name
     return os.path.join("data", "{0}.txt".format(wordlist_file_name))
-#-#
+
 
 # source file ##################################################################
 
 source_file_name = ""
 source_dice_ids = []
 
+
 def set_source_file_name(arg_source_file_name):
     global source_file_name
     source_file_name = arg_source_file_name
     debug("source_file_name = {0}".format(source_file_name))
-#-#
+
 
 def get_source_file_path():
     global source_file_name
     return os.path.join("data", "{0}.txt".format(source_file_name))
-#-#
+
 
 # result file ##################################################################
 
 def get_result_file_path():
     global source_file_name
     return os.path.join("output", "{0}-result.txt".format(source_file_name))
-#-#
+
 
 # functions ####################################################################
 
@@ -72,13 +74,14 @@ def debug(message):
 
     if IS_DEBUG_MODE:
         print(message)
-#-#
+
 
 # def load_wordlist ############################################################
 
 def load_wordlist():
 
     global wordlist_dict
+    global wordlist_dict_keys
 
     try:
         wordlist_file = open(get_wordlist_file_path(), 'r')
@@ -92,6 +95,7 @@ def load_wordlist():
                 wordlist_dict[key] = value
 
             wordlist_dict_keys = wordlist_dict.keys()
+
 
 # def lookup ###################################################################
 
@@ -112,7 +116,7 @@ def lookup():
         dice_words_result = str()
 
     for dice_id in source_dice_ids:
-        #debug("dice_id '{0}'".format(dice_id))
+        # debug("dice_id '{0}'".format(dice_id))
         if dice_id in wordlist_dict_keys:
             debug("wordlist_dict['{0}'] : '{1}'".format(dice_id, wordlist_dict[dice_id]))
             dice_words.append(wordlist_dict[dice_id])
@@ -127,17 +131,17 @@ def lookup():
 
     debug("dice_words_result = {0}".format(dice_words_result))
 
-    #for n3 in range( diceWordsCount ):
-    #    dice_words_result = dice_words_result + str( diceWords[n3] )
-    #    if n3 != diceWordsCount - 1:
-    #        dice_words_result = dice_words_result + " "
-#-#
+    # for n3 in range( diceWordsCount ):
+    #     dice_words_result = dice_words_result + str( diceWords[n3] )
+    #     if n3 != diceWordsCount - 1:
+    #         dice_words_result = dice_words_result + " "
+
 
 # def display_result ###########################################################
 
 def display_result():
     var_result.set(dice_words_result)
-#-#
+
 
 # bound action function ########################################################
 
@@ -166,40 +170,40 @@ def action_load_file():
     display_result()
 
     button_save_to_file.state(["!disabled"])
-#-#
+
 
 def action_save_to_file():
     global dice_words_result
 
     try:
-        resultFile = open(get_result_file_path(), 'w')
+        result_file = open(get_result_file_path(), 'w')
     except IOError:
         print('error, file could not be opened for writing')
     else:
-        with resultFile:
-            resultFile.write(dice_words_result)
-#-#
+        with result_file:
+            result_file.write(dice_words_result)
+
 
 # set up the GUI ###############################################################
 
 # root #
-root = Tk.Tk()
+root = tkinter.Tk()
 root.title("easypass")
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 root.bind('<Return>', action_load_file)
 
 # bound variables #
-var_filename = Tk.StringVar()
+var_filename = tkinter.StringVar()
 var_filename.set("dice-sample")
-var_result = Tk.StringVar()
+var_result = tkinter.StringVar()
 
 # main frame #
 frame_main = ttk.Frame(root, padding="3 3 12 12")
 frame_main.grid(column=0, row=0)
-for row in range(0,1):
+for row in range(0, 1):
     frame_main.columnconfigure(row, weight=1)
-for col in range(0,4):
+for col in range(0, 4):
     frame_main.rowconfigure(col, weight=1)
 
 # row 1 #
