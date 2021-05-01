@@ -33,7 +33,7 @@ dice_words_result = "ERROR"
 
 # wordlist #####################################################################
 
-wordlist_file_name = "wordlist"
+wordlist_file_name = "agr-wordlist-en-original"
 wordlist_dict = {}
 wordlist_dict_keys = wordlist_dict.keys()
 
