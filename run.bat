@@ -1,3 +1,0 @@
-python easypass.py
-
-pause
